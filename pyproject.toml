@@ -1,0 +1,38 @@
+[tool.poetry]
+authors = ["Python Italia"]
+description = ""
+license = "MIT"
+name = "bottino"
+version = "0.1.0"
+
+[tool.poetry.dependencies]
+aiohttp = "^3.7.3"
+python = "^3.9"
+slack-bolt = "^1.2.3"
+slack-sdk = "^3.2.1"
+slackeventsapi = "^2.2.1"
+starlette = "^0.14.1"
+taskipy = "^1.6.0"
+uvicorn = "^0.13.3"
+
+[tool.poetry.dev-dependencies]
+black = "^20.8b1"
+flake8 = "^3.8.4"
+isort = "^5.7.0"
+mypy = "^0.800"
+rich = "^9.10.0"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+
+[tool.taskipy.tasks]
+server = "uvicorn main:api --reload --port 3000 --log-level debug"
+
+[tool.isort]
+ensure_newline_before_comments = true
+force_grid_wrap = 0
+include_trailing_comma = true
+line_length = 88
+multi_line_output = 3
+use_parentheses = true
