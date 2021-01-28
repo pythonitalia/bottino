@@ -70,6 +70,14 @@ colorama = ["colorama (>=0.4.3)"]
 d = ["aiohttp (>=3.3.2)", "aiohttp-cors"]
 
 [[package]]
+name = "certifi"
+version = "2020.12.5"
+description = "Python package for providing Mozilla's CA Bundle."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "chardet"
 version = "3.0.4"
 description = "Universal encoding detector for Python 2 and 3"
@@ -143,6 +151,39 @@ description = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
 category = "main"
 optional = false
 python-versions = ">=3.6"
+
+[[package]]
+name = "httpcore"
+version = "0.12.3"
+description = "A minimal low-level HTTP client."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+h11 = "<1.0.0"
+sniffio = ">=1.0.0,<2.0.0"
+
+[package.extras]
+http2 = ["h2 (>=3,<5)"]
+
+[[package]]
+name = "httpx"
+version = "0.16.1"
+description = "The next generation HTTP client."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+certifi = "*"
+httpcore = ">=0.12.0,<0.13.0"
+rfc3986 = {version = ">=1.3,<2", extras = ["idna2008"]}
+sniffio = "*"
+
+[package.extras]
+brotli = ["brotlipy (>=0.7.0,<0.8.0)"]
+http2 = ["h2 (>=3.0.0,<4.0.0)"]
 
 [[package]]
 name = "idna"
@@ -303,6 +344,20 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "rfc3986"
+version = "1.4.0"
+description = "Validating URI References per RFC 3986"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+idna = {version = "*", optional = true, markers = "extra == \"idna2008\""}
+
+[package.extras]
+idna2008 = ["idna"]
+
+[[package]]
 name = "rich"
 version = "9.10.0"
 description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
@@ -361,6 +416,14 @@ itsdangerous = "<2"
 Jinja2 = "<3"
 MarkupSafe = "<2"
 pyee = ">=7,<8"
+
+[[package]]
+name = "sniffio"
+version = "1.2.0"
+description = "Sniff out which async library your code is running under"
+category = "main"
+optional = false
+python-versions = ">=3.5"
 
 [[package]]
 name = "starlette"
@@ -452,7 +515,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "98a73f67beedc2e3e8b4947174d6da5eb2d5e1b1d5ed5c13ab370e3eb2c03bba"
+content-hash = "7bc9bc156465864fce8594739768a2a78315c872a45308b32dcba25d9a106aa8"
 
 [metadata.files]
 aiohttp = [
@@ -510,6 +573,10 @@ black = [
     {file = "black-20.8b1-py3-none-any.whl", hash = "sha256:70b62ef1527c950db59062cda342ea224d772abdf6adc58b86a45421bab20a6b"},
     {file = "black-20.8b1.tar.gz", hash = "sha256:1c02557aa099101b9d21496f8a914e9ed2222ef70336404eeeac8edba836fbea"},
 ]
+certifi = [
+    {file = "certifi-2020.12.5-py2.py3-none-any.whl", hash = "sha256:719a74fb9e33b9bd44cc7f3a8d94bc35e4049deebe19ba7d8e108280cfd59830"},
+    {file = "certifi-2020.12.5.tar.gz", hash = "sha256:1a4995114262bffbc2413b159f2a1a480c969de6e6eb13ee966d470af86af59c"},
+]
 chardet = [
     {file = "chardet-3.0.4-py2.py3-none-any.whl", hash = "sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"},
     {file = "chardet-3.0.4.tar.gz", hash = "sha256:84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae"},
@@ -537,6 +604,14 @@ flask = [
 h11 = [
     {file = "h11-0.12.0-py3-none-any.whl", hash = "sha256:36a3cb8c0a032f56e2da7084577878a035d3b61d104230d4bd49c0c6b555a9c6"},
     {file = "h11-0.12.0.tar.gz", hash = "sha256:47222cb6067e4a307d535814917cd98fd0a57b6788ce715755fa2b6c28b56042"},
+]
+httpcore = [
+    {file = "httpcore-0.12.3-py3-none-any.whl", hash = "sha256:93e822cd16c32016b414b789aeff4e855d0ccbfc51df563ee34d4dbadbb3bcdc"},
+    {file = "httpcore-0.12.3.tar.gz", hash = "sha256:37ae835fb370049b2030c3290e12ed298bf1473c41bb72ca4aa78681eba9b7c9"},
+]
+httpx = [
+    {file = "httpx-0.16.1-py3-none-any.whl", hash = "sha256:9cffb8ba31fac6536f2c8cde30df859013f59e4bcc5b8d43901cb3654a8e0a5b"},
+    {file = "httpx-0.16.1.tar.gz", hash = "sha256:126424c279c842738805974687e0518a94c7ae8d140cd65b9c4f77ac46ffa537"},
 ]
 idna = [
     {file = "idna-3.1-py3-none-any.whl", hash = "sha256:5205d03e7bcbb919cc9c19885f9920d622ca52448306f2377daede5cf3faac16"},
@@ -757,6 +832,10 @@ regex = [
     {file = "regex-2020.11.13-cp39-cp39-win_amd64.whl", hash = "sha256:a15f64ae3a027b64496a71ab1f722355e570c3fac5ba2801cafce846bf5af01d"},
     {file = "regex-2020.11.13.tar.gz", hash = "sha256:83d6b356e116ca119db8e7c6fc2983289d87b27b3fac238cfe5dca529d884562"},
 ]
+rfc3986 = [
+    {file = "rfc3986-1.4.0-py2.py3-none-any.whl", hash = "sha256:af9147e9aceda37c91a05f4deb128d4b4b49d6b199775fd2d2927768abdc8f50"},
+    {file = "rfc3986-1.4.0.tar.gz", hash = "sha256:112398da31a3344dc25dbf477d8df6cb34f9278a94fee2625d89e4514be8bb9d"},
+]
 rich = [
     {file = "rich-9.10.0-py3-none-any.whl", hash = "sha256:3070d53e3a93864de351c1091af1deb25f41e6051b33e485d4626b591c0cfdb3"},
     {file = "rich-9.10.0.tar.gz", hash = "sha256:e0f2db62a52536ee32f6f584a47536465872cae2b94887cf1f080fb9eaa13eb2"},
@@ -772,6 +851,10 @@ slack-sdk = [
 slackeventsapi = [
     {file = "slackeventsapi-2.2.1-py2.py3-none-any.whl", hash = "sha256:6baa2bf12b5a9d312bf02836720f3ea3b730377449d67ea92ec63fc7c02c7c30"},
     {file = "slackeventsapi-2.2.1.tar.gz", hash = "sha256:1582964860b9e00b721ddfc7402defdd02bdf73f48d4cee7fb952a3b27db45fb"},
+]
+sniffio = [
+    {file = "sniffio-1.2.0-py3-none-any.whl", hash = "sha256:471b71698eac1c2112a40ce2752bb2f4a4814c22a54a3eed3676bc0f5ca9f663"},
+    {file = "sniffio-1.2.0.tar.gz", hash = "sha256:c4666eecec1d3f50960c6bdf61ab7bc350648da6c126e3cf6898d8cd4ddcd3de"},
 ]
 starlette = [
     {file = "starlette-0.14.1-py3-none-any.whl", hash = "sha256:d2f55fb835378442b812637ed3e3fcef3d3e22d292fcb8400fa48d2473202411"},
