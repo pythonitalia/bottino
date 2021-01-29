@@ -138,3 +138,6 @@ dmypy.json
 # profiling data
 .prof
 .vscode/
+
+**/.pulumi/
+**/Pulumi.*.yaml

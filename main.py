@@ -1,7 +1,9 @@
 import asyncio
+import httpx
+
+from mangum import Mangum
 from typing import Iterable, cast
 
-import httpx
 from slack_bolt.adapter.starlette.async_handler import AsyncSlackRequestHandler
 from slack_bolt.async_app import AsyncApp
 from slack_sdk.web.async_client import AsyncWebClient
@@ -93,3 +95,5 @@ async def endpoint(req: Request):
 api = Starlette(
     debug=True, routes=[Route("/slack/events", endpoint=endpoint, methods=["POST"])]
 )
+
+handler = Mangum(api)
