@@ -1,7 +1,20 @@
+import logging
+
+root = logging.getLogger()
+
+
+if root.handlers:
+    for handler in root.handlers:
+        root.removeHandler(handler)
+
+logging.basicConfig(format="%(asctime)s %(message)s", level=logging.DEBUG)
+
 import asyncio
+import httpx
+
+from mangum import Mangum
 from typing import Iterable, cast
 
-import httpx
 from slack_bolt.adapter.starlette.async_handler import AsyncSlackRequestHandler
 from slack_bolt.async_app import AsyncApp
 from slack_sdk.web.async_client import AsyncWebClient
@@ -18,8 +31,13 @@ config = Config(".env")
 SLACK_SIGNING_SECRET = config("SLACK_SIGNING_SECRET", cast=str)
 SLACK_BOT_TOKEN = config("SLACK_BOT_TOKEN", cast=str)
 IFFFT_WEBHOOK = config("IFFFT_WEBHOOK", cast=str)
+IS_LAMBDA = config("IS_LAMBDA", cast=bool, default=False)
 
-app = AsyncApp(signing_secret=SLACK_SIGNING_SECRET, token=SLACK_BOT_TOKEN)
+app = AsyncApp(
+    signing_secret=SLACK_SIGNING_SECRET,
+    token=SLACK_BOT_TOKEN,
+    process_before_response=IS_LAMBDA,
+)
 
 
 async def store_link(link: str, message: str) -> None:
@@ -79,8 +97,9 @@ async def handle_reaction(body: ReactionBody, client: AsyncWebClient, logger):
 
 @app.event("app_mention")  # type: ignore
 async def handle_app_mentions(body, say, logger):
-    logger.info(body)
+    logger.info("App mention body", body)
     await say("What's up?")
+    logger.info("Message sent")
 
 
 app_handler = AsyncSlackRequestHandler(app)
@@ -93,3 +112,5 @@ async def endpoint(req: Request):
 api = Starlette(
     debug=True, routes=[Route("/slack/events", endpoint=endpoint, methods=["POST"])]
 )
+
+handler = Mangum(api)
