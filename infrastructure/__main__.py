@@ -111,11 +111,14 @@ bottino_fn = lambda_.Function(
     role=iam_for_lambda.arn,
     image_uri=image_uri,
     package_type="Image",
+    timeout=15,
+    memory_size=512,
     environment=FunctionEnvironmentArgs(
         variables={
             "SLACK_SIGNING_SECRET": config.get_secret("SLACK_SIGNING_SECRET"),
             "SLACK_BOT_TOKEN": config.get_secret("SLACK_BOT_TOKEN"),
             "IFFFT_WEBHOOK": config.get_secret("IFFFT_WEBHOOK"),
+            "IS_LAMBDA": "True",
         }
     ),
 )
