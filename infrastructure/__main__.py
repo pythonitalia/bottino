@@ -73,8 +73,32 @@ iam.PolicyAttachment(
     policy_arn=iam.ManagedPolicy.AWS_LAMBDA_BASIC_EXECUTION_ROLE,
 )
 
+repository = ecr.get_repository("bottino")
+ecr.LifecyclePolicy(
+    "delete_old_images",
+    repository=repository.name,
+    policy="""{
+    "rules": [
+        {
+            "rulePriority": 1,
+            "description": "Expire images older than 1 day",
+            "selection": {
+                "tagStatus": "untagged",
+                "countType": "sinceImagePushed",
+                "countUnit": "days",
+                "countNumber": 1
+            },
+            "action": {
+                "type": "expire"
+            }
+        }
+    ]
+}
+""",
+)
+
 docker_image = ecr.get_image(
-    repository_name="bottino",
+    repository_name=repository.name,
     image_tag="latest",
 )
 
