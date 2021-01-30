@@ -13,12 +13,12 @@ RUN apk add build-base jpeg-dev zlib-dev libxml2-dev libxslt-dev postgresql-libs
     openssl-dev \
     automake
 
-COPY poetry.lock /home/app/
-COPY pyproject.toml /home/app/
+RUN pip3 install awslambdaric
 
 RUN pip3 install poetry
 
-RUN pip3 install awslambdaric
+COPY poetry.lock /home/app/
+COPY pyproject.toml /home/app/
 
 WORKDIR /home/app/
 
